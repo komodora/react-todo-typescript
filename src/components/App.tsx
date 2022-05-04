@@ -1,27 +1,31 @@
-/* eslint-disable */
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 const todoDataUrl = 'http://localhost:3100/todos';
 
+interface Todo {
+  id: number;
+  content: string;
+  done: boolean;
+}
+
 function App() {
-  const [todoList, setTodoList] = useState([]);
+  const [todoList, setTodoList] = useState<Todo[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(todoDataUrl);
+      const response: AxiosResponse<Todo[]> = await axios.get(todoDataUrl);
       setTodoList(response.data);
     };
-    fetchData();
+    // TODO: eslintの解消
+    void fetchData(); // eslint-disable-line no-void
   }, []);
-
-  console.log('TODOリスト:', todoList);
 
   return (
     <>
       <h1>TODO進捗管理</h1>
       <textarea />
-      <button>+ TODOを追加</button>
+      <button>+ TODOを追加</button> {/* eslint-disable-line react/button-has-type */}
       <h2>TODOリスト</h2>
       <ul>
         {todoList.map((todo) => (
