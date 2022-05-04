@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import axios, { AxiosResponse } from 'axios';
 
 const todoDataUrl = 'http://localhost:3100/todos';
@@ -8,6 +8,41 @@ interface Todo {
   content: string;
   done: boolean;
 }
+
+interface TodoTitleProps {
+  title: string;
+  as: string;
+}
+
+interface TodoItemProps {
+  todo: Todo;
+}
+
+interface TodoListProps {
+  todoList: Todo[];
+}
+
+const TodoTitle: FC<TodoTitleProps> = ({ title, as }) => {
+  if (as === 'h1') return <h1>{title}</h1>;
+  if (as === 'h2') return <h2>{title}</h2>;
+  return <p>{title}</p>;
+};
+
+const TodoItem: FC<TodoItemProps> = ({ todo }) => (
+  <li>
+    {todo.content}
+    <button>{todo.done ? '未完了リストへ' : '完了リストへ'}</button>
+    <button>削除</button>
+  </li>
+);
+
+const TodoList: FC<TodoListProps> = ({ todoList }) => (
+  <ul>
+    {todoList.map((todo) => (
+      <TodoItem todo={todo} key={todo.id} />
+    ))}
+  </ul>
+);
 
 function App() {
   const [todoList, setTodoList] = useState<Todo[]>([]);
@@ -26,29 +61,15 @@ function App() {
 
   return (
     <>
-      <h1>TODO進捗管理</h1>
+      <TodoTitle title="TODO進捗管理" as="h1" />
       <textarea />
       <button>+ TODOを追加</button>
-      <h2>未完了TODOリスト</h2>
-      <ul>
-        {inCompletedList.map((todo) => (
-          <li key={todo.id}>
-            {todo.content}
-            <button>{todo.done ? '未完了リストへ' : '完了リストへ'}</button>
-            <button>削除</button>
-          </li>
-        ))}
-      </ul>
-      <h2>完了TODOリスト</h2>
-      <ul>
-        {completedList.map((todo) => (
-          <li key={todo.id}>
-            {todo.content}
-            <button>{todo.done ? '未完了リストへ' : '完了リストへ'}</button>
-            <button>削除</button>
-          </li>
-        ))}
-      </ul>
+
+      <TodoTitle title="未完了TODOリスト" as="h2" />
+      <TodoList todoList={inCompletedList} />
+
+      <TodoTitle title="完了TODOリスト" as="h2" />
+      <TodoList todoList={completedList} />
     </>
   );
 }
