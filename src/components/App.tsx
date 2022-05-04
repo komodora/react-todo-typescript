@@ -1,34 +1,17 @@
 import { useState, useEffect, FC } from 'react';
 import axios, { AxiosResponse } from 'axios';
 
+import type { ITodo, ITodoTitleProps, ITodoItemProps, ITodoListProps } from '@/types/todo';
+
 const todoDataUrl = 'http://localhost:3100/todos';
 
-interface Todo {
-  id: number;
-  content: string;
-  done: boolean;
-}
-
-interface TodoTitleProps {
-  title: string;
-  as: string;
-}
-
-interface TodoItemProps {
-  todo: Todo;
-}
-
-interface TodoListProps {
-  todoList: Todo[];
-}
-
-const TodoTitle: FC<TodoTitleProps> = ({ title, as }) => {
+const TodoTitle: FC<ITodoTitleProps> = ({ title, as }) => {
   if (as === 'h1') return <h1>{title}</h1>;
   if (as === 'h2') return <h2>{title}</h2>;
   return <p>{title}</p>;
 };
 
-const TodoItem: FC<TodoItemProps> = ({ todo }) => (
+const TodoItem: FC<ITodoItemProps> = ({ todo }) => (
   <li>
     {todo.content}
     <button>{todo.done ? '未完了リストへ' : '完了リストへ'}</button>
@@ -36,7 +19,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo }) => (
   </li>
 );
 
-const TodoList: FC<TodoListProps> = ({ todoList }) => (
+const TodoList: FC<ITodoListProps> = ({ todoList }) => (
   <ul>
     {todoList.map((todo) => (
       <TodoItem todo={todo} key={todo.id} />
@@ -45,11 +28,11 @@ const TodoList: FC<TodoListProps> = ({ todoList }) => (
 );
 
 function App() {
-  const [todoList, setTodoList] = useState<Todo[]>([]);
+  const [todoList, setTodoList] = useState<ITodo[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response: AxiosResponse<Todo[]> = await axios.get(todoDataUrl);
+      const response: AxiosResponse<ITodo[]> = await axios.get(todoDataUrl);
       setTodoList(response.data);
     };
     // TODO: eslintの解消

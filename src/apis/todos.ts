@@ -1,20 +1,16 @@
 import axios, { AxiosResponse } from 'axios';
 
+import type { ITodo } from '@/types/todo';
+
 const todoDataUrl = 'http://localhost:3100/todos';
 
-interface Todo {
-  id: string;
-  content: string;
-  done: boolean;
-}
-
 export const getAllTodosData = async () => {
-  const response: AxiosResponse<Todo[]> = await axios.get(todoDataUrl);
+  const response: AxiosResponse<ITodo[]> = await axios.get(todoDataUrl);
   return response.data;
 };
 
-export const addTodoData = async (todo: Todo) => {
-  const response: AxiosResponse<Todo> = await axios.post(todoDataUrl, todo);
+export const addTodoData = async (todo: ITodo) => {
+  const response: AxiosResponse<ITodo> = await axios.post(todoDataUrl, todo);
   return response.data;
 };
 
@@ -23,7 +19,7 @@ export const deleteTodoData = async (id: string) => {
   return id;
 };
 
-export const updateTodoData = async (id: string, todo: Todo) => {
-  const response: AxiosResponse<Todo> = await axios.post(`${todoDataUrl}/${id}}`, todo);
+export const updateTodoData = async (id: string, todo: ITodo) => {
+  const response: AxiosResponse<ITodo> = await axios.post(`${todoDataUrl}/${id}}`, todo);
   return response.data;
 };
