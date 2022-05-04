@@ -26,6 +26,12 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/button-has-type': 'off',
-    'react/function-component-definition': [2, { namedComponents: ['arrow-function', 'function-declaration'] }],
+    'react/function-component-definition': ['error', { namedComponents: ['arrow-function', 'function-declaration'] }],
+    'import/extensions': [
+      'error',
+      {
+        ts: 'never',
+      },
+    ],
   },
 };
