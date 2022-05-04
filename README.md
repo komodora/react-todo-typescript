@@ -44,3 +44,17 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## 環境構築
+
+### 手順
+
+```
+npx create-react-app react-todo-typescript --template typescript
+npm init @eslint/config
+npm install -D eslint-config-airbnb-typescript
+npm install -D prettier eslint-config-prettier
+```
+
+設定ファイルの修正
+.eslintrc, .prettierrc.js, .vscode 下
