@@ -1,9 +1,7 @@
-import { useState, useEffect, FC } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import { FC } from 'react';
 
-import type { ITodo, ITodoTitleProps, ITodoItemProps, ITodoListProps } from '@/types/todo';
-
-const todoDataUrl = 'http://localhost:3100/todos';
+import type { ITodoTitleProps, ITodoItemProps, ITodoListProps } from '@/types/todo';
+import useTodo from '@/hooks/useTodo';
 
 const TodoTitle: FC<ITodoTitleProps> = ({ title, as }) => {
   if (as === 'h1') return <h1>{title}</h1>;
@@ -28,16 +26,7 @@ const TodoList: FC<ITodoListProps> = ({ todoList }) => (
 );
 
 function App() {
-  const [todoList, setTodoList] = useState<ITodo[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response: AxiosResponse<ITodo[]> = await axios.get(todoDataUrl);
-      setTodoList(response.data);
-    };
-    // TODO: eslintの解消
-    void fetchData(); // eslint-disable-line no-void
-  }, []);
+  const { todoList } = useTodo();
 
   const inCompletedList = todoList.filter((todo) => !todo.done);
   const completedList = todoList.filter((todo) => todo.done);
