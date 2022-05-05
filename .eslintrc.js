@@ -25,5 +25,13 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   rules: {
     'react/react-in-jsx-scope': 'off',
+    'react/button-has-type': 'off',
+    'react/function-component-definition': ['error', { namedComponents: ['arrow-function', 'function-declaration'] }],
+    'import/extensions': [
+      'error',
+      {
+        ts: 'never',
+      },
+    ],
   },
 };
