@@ -1,7 +1,12 @@
-import { FC } from 'react';
+/* eslint-disable no-void */
+import { FC, useRef } from 'react';
 
 import type { ITodoTitleProps, ITodoItemProps, ITodoListProps } from '@/types/todo';
-import useTodo from '@/hooks/useTodo';
+// TODO: パスエイリアスの解決
+// typescriptではパスエイリアスの解決までは行わない
+// webpack.config.jsで設定しないといけないが、create-react-appしており
+// ここら辺の設定が隠蔽されているため、rejectするか上書き用のパッケージを導入しないといけない
+import useTodo from '../hooks/useTodo';
 
 const TodoTitle: FC<ITodoTitleProps> = ({ title, as }) => {
   if (as === 'h1') return <h1>{title}</h1>;
@@ -26,16 +31,24 @@ const TodoList: FC<ITodoListProps> = ({ todoList }) => (
 );
 
 function App() {
-  const { todoList } = useTodo();
+  const { todoList, addTodoListItem } = useTodo();
 
+  const inputEl = useRef<HTMLTextAreaElement>(null!);
+
+  const handleAddTodoListItem = () => {
+    if (inputEl.current.value === '') return;
+
+    void addTodoListItem(inputEl.current.value);
+    inputEl.current.value = '';
+  };
   const inCompletedList = todoList.filter((todo) => !todo.done);
   const completedList = todoList.filter((todo) => todo.done);
 
   return (
     <>
       <TodoTitle title="TODO進捗管理" as="h1" />
-      <textarea />
-      <button>+ TODOを追加</button>
+      <textarea ref={inputEl} />
+      <button onClick={handleAddTodoListItem}>+ TODOを追加</button>
 
       <TodoTitle title="未完了TODOリスト" as="h2" />
       <TodoList todoList={inCompletedList} />

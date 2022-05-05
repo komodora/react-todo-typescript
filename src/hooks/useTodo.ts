@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { ulid } from 'ulid';
 
 import type { ITodo } from '@/types/todo';
-import * as todoData from '@/apis/todos';
+import * as todoData from '../apis/todos';
 
 const useTodo = () => {
   const [todoList, setTodoList] = useState<ITodo[]>([]);
