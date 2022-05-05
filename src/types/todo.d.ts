@@ -11,8 +11,12 @@ export interface ITodoTitleProps {
 
 export interface ITodoItemProps {
   todo: ITodo;
+  toggleTodoListItemStatus: (id: string, done: boolean) => void;
+  deleteTodoListItem: (id: string) => void;
 }
 
 export interface ITodoListProps {
   todoList: ITodo[];
+  toggleTodoListItemStatus: (id: string, done: boolean) => void;
+  deleteTodoListItem: (id: string) => void;
 }
