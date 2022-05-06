@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import { List, As } from '@chakra-ui/react';
+
 import type { ITodo } from '@/types/todo';
 import TodoTitle from './TodoTitle';
 import TodoItem from './TodoItem';
@@ -9,16 +11,24 @@ interface ITodoListProps {
   toggleTodoListItemStatus: (id: string, done: boolean) => void;
   deleteTodoListItem: (id: string) => void;
   title: string;
-  as: string;
+  as: As;
+  fontSize: object;
 }
 
 /* eslint-disable react/jsx-no-useless-fragment */
-const TodoList: FC<ITodoListProps> = ({ todoList, toggleTodoListItemStatus, deleteTodoListItem, title, as }) => (
+const TodoList: FC<ITodoListProps> = ({
+  todoList,
+  toggleTodoListItemStatus,
+  deleteTodoListItem,
+  title,
+  as,
+  fontSize,
+}) => (
   <>
     {todoList.length !== 0 && (
       <>
-        <TodoTitle title={title} as={as} />
-        <ul>
+        <TodoTitle title={title} as={as} fontSize={fontSize} mt="12" />
+        <List w="full">
           {todoList.map((todo) => (
             <TodoItem
               todo={todo}
@@ -27,7 +37,7 @@ const TodoList: FC<ITodoListProps> = ({ todoList, toggleTodoListItemStatus, dele
               deleteTodoListItem={deleteTodoListItem}
             />
           ))}
-        </ul>
+        </List>
       </>
     )}
   </>

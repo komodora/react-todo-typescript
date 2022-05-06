@@ -1,14 +1,20 @@
 import { FC } from 'react';
 
+import { Heading, As } from '@chakra-ui/react';
+
+// TODO: エラーの解消
+/* eslint-disable */
 interface ITodoTitleProps {
   title: string;
-  as: string;
+  as: As;
+  fontSize: object;
+  mt?: any;
 }
 
-const TodoTitle: FC<ITodoTitleProps> = ({ title, as }) => {
-  if (as === 'h1') return <h1>{title}</h1>;
-  if (as === 'h2') return <h2>{title}</h2>;
-  return <p>{title}</p>;
-};
+const TodoTitle: FC<ITodoTitleProps> = ({ title, as, fontSize, mt = '4' }) => (
+  <Heading mt={mt} as={as} fontSize={fontSize} w="full">
+    {title}
+  </Heading>
+);
 
 export default TodoTitle;
